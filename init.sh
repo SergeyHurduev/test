@@ -4,7 +4,6 @@ sudo ln -s /home/box/web/etc/nginx.conf  /etc/nginx/sites-enabled/test.conf
 #sudo /etc/init.d/nginx restart
 #sudo ln -s /home/box/web/etc/gunicorn.conf   /etc/gunicorn.d/test
 #sudo /etc/init.d/gunicorn restart
-cd /home/box/web/etc/
 gunicorn -w 4 --bind 127.0.0.1:8080 hello:app
 #sudo /etc/init.d/mysql start
 
