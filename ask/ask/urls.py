@@ -20,15 +20,15 @@ from django.contrib import admin
 #    url(r'^admin/', admin.site.urls),
 #]
 
-from qa.views import test
-from qa.views import news
+from qa.views import test, news, popular, question
+
 
 urlpatterns = [
     url(r'^$',news),
     url(r'login/', test),
     url(r'signup/',test),
-    url(r'questions/\d+/', test),
+    url(r'question/(?P<_id>\d+)/', question),
     url(r'ask/',test),
-    url(r'popular/', test),
+    url(r'popular/', popular),
     url(r'new/', test),
 ]

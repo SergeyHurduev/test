@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.core.paginator import Paginator
@@ -40,3 +40,40 @@ def news(request, *args, **kwargs):
 		'paginator': paginator,
 		'page': page
 	})
+
+def popular(request, *args, **kwargs):
+	
+	try:
+		limit = int(request.GET.get('limit', 10))
+		if limit < 0 or limit > 100:
+			limit = 10
+	except:
+		limit = 10
+	try:
+		page = int(request.GET.get('page', 1))
+		if page < 0:
+			page = 1
+	except:
+		page = 1
+	
+	paginator = Paginator(Question.objects.popular(), limit)
+	paginator.baseurl = "?page="
+	questions = paginator.page(page)
+	
+	return render( request, 'popular.html', {
+		'questions': questions,
+		'paginator': paginator,
+		'page': page
+	})
+
+def question(request, _id):
+	
+	question = get_object_or_404(Question,id=_id)
+	
+	answers = Answer.objects.filter(question_id=_id)
+	
+	return render( request, 'question.html', {
+		'question': question,
+		'answers': answers
+	})
+

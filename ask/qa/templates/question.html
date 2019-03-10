@@ -1,0 +1,15 @@
+<div>
+<h1>{{ question.title }}</h1>
+<p>{{ question.text }}</p>
+<hr>
+<div>
+ANSWERS:</div>
+<div>
+{% for answer in answers %}
+text: {{ answer.text }}<br>
+<br>
+added_at: {{answer.added_at }}<br>
+author: {{ anwser.author_id}}
+<br>&nbsp;<br>
+{% endfor %}
+</div>
