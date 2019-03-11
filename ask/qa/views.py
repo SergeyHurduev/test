@@ -79,7 +79,7 @@ def question(request, _id):
 		if answer_form.is_valid():
 			
 			answer = answer_form.save()
-			return HttpResponseRedirect('qquestion/%s' % _id)
+			return HttpResponseRedirect('/question/%s' % _id)
 			
 	else:
 		
