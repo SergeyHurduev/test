@@ -13,3 +13,14 @@ author: {{ anwser.author_id}}
 <br>&nbsp;<br>
 {% endfor %}
 </div>
+<hr>
+INPUT YOUR ANSWER HERE:
+<div>
+	<form method="post">
+	{{ answer_form.as_p }}
+	<div>
+		<input type="submit" value="Save answer">
+	</div>
+</form>
+
+</div>

@@ -8,10 +8,11 @@ from django.core.paginator import Paginator
 
 from .models import Question
 from .models import Answer
+from .forms import AnswerForm
 
 # Create your views here.
 
-from django.http import HttpResponse 
+from django.http import HttpResponse, HttpResponseRedirect 
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
@@ -69,11 +70,27 @@ def popular(request, *args, **kwargs):
 def question(request, _id):
 	
 	question = get_object_or_404(Question,id=_id)
-	
 	answers = Answer.objects.filter(question_id=_id)
 	
+	if request.method == "POST":
+		
+		answer_form = AnswerForm(request.POST)
+		
+		if answer_form.is_valid():
+			
+			answer = answer_form.save()
+			return HttpResponseRedirect('qquestion/%s' % _id)
+			
+	else:
+		
+		data = {'question':_id, 'author': None}
+		
+		answer_form = AnswerForm(initial=data)
+		
+		
 	return render( request, 'question.html', {
 		'question': question,
-		'answers': answers
+		'answers': answers,
+		'answer_form': answer_form
 	})
 
