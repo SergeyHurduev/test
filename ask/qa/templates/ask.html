@@ -1,0 +1,13 @@
+<div>
+<h1>Новый вопрос</h1>
+<hr>
+<div>
+	<form method="post">
+	{{ ask_form.as_p }}
+	{% csrf_token %}
+	<div>
+		<input type="submit" value="Send ask">
+	</div>
+</form>
+
+</div>

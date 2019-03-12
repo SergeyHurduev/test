@@ -21,3 +21,14 @@ class AnswerForm(forms.Form):
 		answer.save()
 		return answer
 
+class AskForm(forms.Form):
+
+	title = forms.CharField(label='title', max_length=100)
+	text = forms.CharField(label='text', widget = forms.Textarea)
+	
+	def save(self):
+		text = self.cleaned_data['text']
+		title = self.cleaned_data['title']
+		ask = Question(title=title, text=text)
+		ask.save()
+		return ask

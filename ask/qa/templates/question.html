@@ -18,6 +18,7 @@ INPUT YOUR ANSWER HERE:
 <div>
 	<form method="post">
 	{{ answer_form.as_p }}
+	{% csrf_token %}
 	<div>
 		<input type="submit" value="Save answer">
 	</div>
