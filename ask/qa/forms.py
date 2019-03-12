@@ -12,7 +12,7 @@ class AnswerForm(forms.Form):
 	
 	text = forms.CharField(label='text', widget = forms.Textarea)
 	question = forms.IntegerField(widget = forms.widgets.HiddenInput)
-	author = forms.InetegerField(widget = forms.widgets.HiddenInput, required = False)
+	author = forms.IntegerField(widget = forms.widgets.HiddenInput, required = False)
 	
 	def save(self):
 		text = self.cleaned_data['text']
