@@ -1,4 +1,9 @@
 <div>
+{% if username %}
+	{{ username }}
+<hr>
+{% endif %}
+
 {% for question in questions %}
 <a href="question/{{ question.id }}">{{ question.title }}</a><br>
 {% endfor %}

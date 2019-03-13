@@ -36,7 +36,13 @@ def news(request, *args, **kwargs):
 	paginator.baseurl = "?page="
 	questions = paginator.page(page)
 	
+	try:
+		username = request.user
+	except:
+		username = None
+		
 	return render( request, 'news.html', {
+		'username': username,
 		'questions': questions,
 		'paginator': paginator,
 		'page': page

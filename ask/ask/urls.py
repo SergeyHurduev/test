@@ -21,12 +21,12 @@ from django.contrib import admin
 #]
 
 from qa.views import test, news, popular, question, ask
-
+from login.views import signup
 
 urlpatterns = [
     url(r'^$',news),
     url(r'login/', test),
-    url(r'signup/',test),
+    url(r'signup/',signup),
     url(r'question/(?P<_id>\d+)/', question),
     url(r'ask/',ask),
     url(r'popular/', popular),

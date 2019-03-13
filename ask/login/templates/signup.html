@@ -1,0 +1,13 @@
+<div>
+<h1>Регистрация</h1>
+<hr>
+<div>
+	<form method="post">
+	{{ signup.as_p }}
+	{% csrf_token %}
+	<div>
+		<input type="submit" value="Sign up">
+	</div>
+</form>
+
+</div>
