@@ -14,7 +14,6 @@ class AnswerForm(forms.Form):
 	
 	text = forms.CharField(label='text', widget = forms.Textarea)
 	question = forms.IntegerField(widget = forms.widgets.HiddenInput)
-	author = forms.CharField(widget = forms.widgets.HiddenInput, required = False)
 	
 	def save(self):
 		
@@ -22,11 +21,13 @@ class AnswerForm(forms.Form):
 		question = Question.objects.get(id=self.cleaned_data['question'])
 		
 		try:
-			author = User.objects.get(username=self.cleaned_data['author'])
+			author = User.objects.get(username=self._user)
+			#author = author.id
 		except User.DoesNotExist:
 			author = None
 		
 		answer = Answer(text=text, question=question, author=author)
+		#answer = Answer(**self.cleaned_data)
 		
 		answer.save()
 		
@@ -37,7 +38,7 @@ class AskForm(forms.Form):
 	title = forms.CharField(label='title', max_length=100)
 	text = forms.CharField(label='text', widget = forms.Textarea)
 	
-	author = forms.CharField(widget = forms.widgets.HiddenInput, required = False)
+	#author = forms.CharField(widget = forms.widgets.HiddenInput, required = False)
 	
 	def save(self):
 		
@@ -45,7 +46,8 @@ class AskForm(forms.Form):
 		title = self.cleaned_data['title']
 		
 		try:
-			author = User.objects.get(username=self.cleaned_data['author'])
+			author = User.objects.get(username=self._user)
+			#author = author.id
 		except User.DoesNotExist:
 			author = None
 		

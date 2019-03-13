@@ -80,6 +80,7 @@ def question(request, _id):
 	if request.method == "POST":
 		
 		answer_form = AnswerForm(request.POST)
+		answer_form._user = request.user
 		
 		if answer_form.is_valid():
 			
@@ -89,13 +90,7 @@ def question(request, _id):
 			
 	else:
 		
-		try:
-			user = User.objects.get(username=request.user)
-			
-		except User.DoesNotExist:
-			user = ''
-		
-		data = {'question':_id, 'author': user}
+		data = {'question':_id}
 		
 		answer_form = AnswerForm(initial=data)
 		
@@ -111,6 +106,7 @@ def ask(request):
 	if request.method == "POST":
 	
 		ask_form = AskForm(request.POST)
+		ask_form._user = request.user
 		
 		if ask_form.is_valid():
 			
@@ -119,11 +115,6 @@ def ask(request):
 			
 	else:
 		
-		try:
-			user = User.objects.get(username=request.user)
-		except User.DoesNotExist:
-			user = ''
-
-		ask_form = AskForm(initial={'author':user})
+		ask_form = AskForm()
 		
 	return render( request, 'ask.html', {'ask_form': ask_form})
