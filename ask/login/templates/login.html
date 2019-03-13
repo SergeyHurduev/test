@@ -1,0 +1,13 @@
+<div>
+<h1>Вход в систему</h1>
+<hr>
+<div>
+	<form method="post">
+	{{ login.as_p }}
+	{% csrf_token %}
+	<div>
+		<input type="submit" value="Login">
+	</div>
+</form>
+
+</div>

@@ -20,3 +20,10 @@ class SignupForm(forms.Form):
 		return user
 
 
+class LoginForm(forms.Form):
+	
+	username = forms.CharField(label='username', max_length=32)
+	password = forms.CharField(label='password', widget=forms.PasswordInput)
+	
+
+

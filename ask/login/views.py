@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404 
 from django.contrib.auth import authenticate, login
 
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 
 # Create your views here.
 
@@ -35,3 +35,34 @@ def signup(request):
 		signup_form = SignupForm()
 		
 	return render( request, 'signup.html', {'signup': signup_form})
+
+
+def LogIn(request):
+
+	if request.method == 'POST':
+		
+		login_form = LoginForm(request.POST)
+		
+		if login_form.is_valid():
+			
+			username = request.POST['username']
+			password = request.POST['password']
+			
+			user = authenticate(username=username, password=password)
+			
+			if user is not None:
+				
+				login(request, user)
+				
+				response = HttpResponseRedirect('/')
+				response.set_cookie('sessionid','172hjqwejqwhegq12532163')
+				
+				return response
+			
+			
+	else:
+		
+		login_form = LoginForm()
+		
+	return render( request, 'login.html', {'login': login_form})
+	

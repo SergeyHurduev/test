@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 from .models import Question
 from .models import Answer
 from .forms import AnswerForm, AskForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -36,11 +37,9 @@ def news(request, *args, **kwargs):
 	paginator.baseurl = "?page="
 	questions = paginator.page(page)
 	
-	try:
-		username = request.user
-	except:
-		username = None
-		
+	
+	username = request.user if request.user != "AnonymousUser" else None
+	 
 	return render( request, 'news.html', {
 		'username': username,
 		'questions': questions,
@@ -85,11 +84,18 @@ def question(request, _id):
 		if answer_form.is_valid():
 			
 			answer = answer_form.save()
+			
 			return HttpResponseRedirect('/question/%s' % _id)
 			
 	else:
 		
-		data = {'question':_id, 'author': None}
+		try:
+			user = User.objects.get(username=request.user)
+			
+		except User.DoesNotExist:
+			user = ''
+		
+		data = {'question':_id, 'author': user}
 		
 		answer_form = AnswerForm(initial=data)
 		
@@ -113,6 +119,11 @@ def ask(request):
 			
 	else:
 		
-		ask_form = AskForm()
+		try:
+			user = User.objects.get(username=request.user)
+		except User.DoesNotExist:
+			user = ''
+
+		ask_form = AskForm(initial={'author':user})
 		
 	return render( request, 'ask.html', {'ask_form': ask_form})
